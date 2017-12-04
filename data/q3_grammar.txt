@@ -1,0 +1,15 @@
+S -> U R
+R -> S V
+S -> X T
+T -> S Y
+S -> U I
+I -> B V
+S -> X P
+P -> B Y
+B -> Z B
+B -> Z
+X -> 1
+Y -> 2
+U -> 3
+V -> 4
+Z -> 5
