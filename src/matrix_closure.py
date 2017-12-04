@@ -6,7 +6,7 @@ def matrix_closure(matrix, grammar, N):
                 for T1 in matrix[i][j]:
                     for T2 in matrix[j][k]:
                         for (left, right) in grammar:
-                            if T1 + T2 == right and left not in matrix[i][k]:
+                            if T1 + ' ' + T2 == right and left not in matrix[i][k]:
                                 matrix[i][k].append(left)
 
     return matrix

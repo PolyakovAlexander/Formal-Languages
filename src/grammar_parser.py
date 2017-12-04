@@ -13,6 +13,6 @@ def parse_grammar(path):
 
     for line in f:
         splitted = line.strip().split(' -> ')
-        grammar.append((splitted[0], splitted[1].replace(' ', '')))
+        grammar.append((splitted[0], splitted[1]))
 
     return grammar
