@@ -30,9 +30,11 @@ def matrix_algorithm(gram_path, graph_path, out=None, test=False):
 
     for i in range(0, N):
         for j in range(0, N):
-            if 'S' in matrix[i][j]:
-                res.append((i, 'S', j))
-                res_count += 1
+            for non_term in matrix[i][j]:
+                if test and non_term == 'S':
+                    res_count += 1
+                else:
+                    res.append((i, non_term, j))
 
     if test:
         return res_count
