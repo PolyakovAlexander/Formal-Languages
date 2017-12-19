@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 
 def parse_grammar(path):
@@ -9,10 +10,10 @@ def parse_grammar(path):
         print(err)
         sys.exit(1)
 
-    grammar = []
+    grammar = defaultdict(list)
 
     for line in f:
         splitted = line.strip().split(' -> ')
-        grammar.append((splitted[0], splitted[1]))
+        grammar[splitted[0]] += [splitted[1]]
 
     return grammar

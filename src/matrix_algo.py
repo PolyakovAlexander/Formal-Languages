@@ -11,9 +11,10 @@ def matrix_algorithm(gram_path, graph_path, out=None, test=False):
     matrix = [[[] for i in range(0, N)] for j in range(0, N)]
 
     for (i, j, label) in graph:
-        for (left, right) in grammar:
-            if right == label:
-                matrix[int(i)][int(j)].append(left)
+        for left, right in grammar.items():
+            for value in right:
+                if value == label:
+                    matrix[int(i)][int(j)].append(left)
 
     old_matrix = ['!@#$%']
 
