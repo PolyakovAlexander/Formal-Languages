@@ -8,7 +8,7 @@ import copy
 def matrix_algorithm(gram_path, graph_path, out=None, test=False):
     grammar = gram.parse_grammar(gram_path)
     graph, N = gp.parse_graph(graph_path)
-    matrix = [[[] for i in range(0, N)] for j in range(0, N)]
+    matrix = [[[] for i in range(N)] for j in range(N)]
 
     for (i, j, label) in graph:
         for left, right in grammar.items():
@@ -21,16 +21,16 @@ def matrix_algorithm(gram_path, graph_path, out=None, test=False):
     while old_matrix != matrix:
         old_matrix = copy.deepcopy(matrix)
         updated = mc.matrix_closure(copy.deepcopy(matrix), grammar, N)
-        for i in range(0, N):
-            for j in range(0, N):
+        for i in range(N):
+            for j in range(N):
                 matrix[i][j] += updated[i][j]
                 matrix[i][j] = list(set(matrix[i][j]))
 
     res = []
     res_count = 0
 
-    for i in range(0, N):
-        for j in range(0, N):
+    for i in range(N):
+        for j in range(N):
             for non_term in matrix[i][j]:
                 if test and non_term == 'S':
                     res_count += 1
