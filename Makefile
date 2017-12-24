@@ -3,4 +3,4 @@ PYTHON=python3
 all: test
 
 test:
-	$(PYTHON) src/do_test.py
+	$(PYTHON) src/matrix_algo/do_test.py
