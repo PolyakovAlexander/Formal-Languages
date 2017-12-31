@@ -1,9 +1,26 @@
 ## Formal Languages Courses' Tasks
 
-Run 'make' to run tests. It takes 20 minutes on my laptop.
+- matrix_algo.py
+- bottom_up.py
+- top_down.py
 
-matrix_algo.py - graph parsing by matrix multiplication  <br />
-Usage: python3 matrix_algo.py --gram= --graph= --out=  <br />
---gram  - path to grammar  <br />
---graph - path to graph  <br />
---out   - path to file to store results(optional)  
+## Requirements:
+python3
+
+### How to run every algorithm:
+```
+python3 src/matrix_algo.py data/test_graphs/[graph].dot data/test_grammars/q1_chomsky
+```
+
+```
+python3 src/top_down.py data/test_graphs/[graph].dot data/test_grammars/q1
+```
+
+```
+python3 src/bottom_up.py data/test_graphs/[graph].dot data/test_grammars/q1
+```
+
+## Tests:
+```
+python3 src/do_test.py
+```

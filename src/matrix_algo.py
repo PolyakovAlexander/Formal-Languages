@@ -64,7 +64,6 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False, custom_test=Fa
                     f.write(str(i) + ',' + non_term + ',' + str(j) + '\n')
 
 if __name__ == '__main__':
-    print(matrix_algorithm('../data/test_graphs/my_graph', '../data/test_grammars/my_grammar_chomsky'))
 
     if len(sys.argv) == 3:
         matrix_algorithm(sys.argv[1], sys.argv[2], out=sys.argv[3])
