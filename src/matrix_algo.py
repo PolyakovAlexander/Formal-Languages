@@ -1,6 +1,6 @@
-import parsers
-import argparse
+import utils
 import copy
+import sys
 
 
 def matrix_closure(matrix, grammar, n):
@@ -18,9 +18,9 @@ def matrix_closure(matrix, grammar, n):
     return matrix
 
 
-def matrix_algorithm(gram_path, graph_path, out=None, test=False):
-    grammar = parsers.parse_chomsky_grammar(gram_path).rules
-    graph, N = parsers.parse_graph(graph_path)
+def matrix_algorithm(graph_path, gram_path, out=None, test=False, custom_test=False):
+    grammar = utils.parse_chomsky_grammar(gram_path).rules
+    graph, N, _ = utils.parse_graph(graph_path)
     matrix = [[[] for i in range(N)] for j in range(N)]
 
     for (i, j, label) in graph:
@@ -52,24 +52,24 @@ def matrix_algorithm(gram_path, graph_path, out=None, test=False):
 
     if test:
         return res_count
+    elif custom_test:
+        return list(filter(lambda x: x[1] == 'S', res))
     else:
         if out is None:
             for (i, non_term, j) in res:
                 print(str(i) + ',' + non_term + ',' + str(j))
         else:
-            with open(args.out_path, 'w') as f:
+            with open(out, 'w') as f:
                 for (i, non_term, j) in res:
                     f.write(str(i) + ',' + non_term + ',' + str(j) + '\n')
 
 if __name__ == '__main__':
+    print(matrix_algorithm('../data/test_graphs/my_graph', '../data/test_grammars/my_grammar_chomsky'))
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--gram', dest='gram_path', type=str,
-                        help='Path to file with grammar')
-    parser.add_argument('--graph', dest='graph_path', type=str,
-                        help='Path to file with graph/automaton')
-    parser.add_argument('--out', dest='out_path', type=str,
-                        help='Path to file to store the results(optional)')
-    args = parser.parse_args()
-
-    matrix_algorithm(args.gram_path, args.graph_path, args.out_path)
+    if len(sys.argv) == 3:
+        matrix_algorithm(sys.argv[1], sys.argv[2], out=sys.argv[3])
+    elif len(sys.argv) == 2:
+        matrix_algorithm(sys.argv[1], sys.argv[2])
+    else:
+        print('Incorrect amount of arguments, run script like this: '
+              'python3 matrix_algo.py [automaton] [grammar] [output]')
