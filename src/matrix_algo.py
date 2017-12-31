@@ -1,13 +1,26 @@
-import grammar_parser as gram
-import graph_parser as gp
-import matrix_closure as mc
+import parsers
 import argparse
 import copy
 
 
+def matrix_closure(matrix, grammar, n):
+
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                for T1 in matrix[i][j]:
+                    for T2 in matrix[j][k]:
+                        for left, right in grammar.items():
+                            for value in right:
+                                if T1 + ' ' + T2 == value and left not in matrix[i][k]:
+                                    matrix[i][k].append(left)
+
+    return matrix
+
+
 def matrix_algorithm(gram_path, graph_path, out=None, test=False):
-    grammar = gram.parse_grammar(gram_path)
-    graph, N = gp.parse_graph(graph_path)
+    grammar = parsers.parse_chomsky_grammar(gram_path).rules
+    graph, N = parsers.parse_graph(graph_path)
     matrix = [[[] for i in range(N)] for j in range(N)]
 
     for (i, j, label) in graph:
@@ -20,7 +33,7 @@ def matrix_algorithm(gram_path, graph_path, out=None, test=False):
 
     while old_matrix != matrix:
         old_matrix = copy.deepcopy(matrix)
-        updated = mc.matrix_closure(copy.deepcopy(matrix), grammar, N)
+        updated = matrix_closure(copy.deepcopy(matrix), grammar, N)
         for i in range(N):
             for j in range(N):
                 matrix[i][j] += updated[i][j]
