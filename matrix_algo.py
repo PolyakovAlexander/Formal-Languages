@@ -65,9 +65,9 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False, custom_test=Fa
 
 if __name__ == '__main__':
 
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 4:
         matrix_algorithm(sys.argv[1], sys.argv[2], out=sys.argv[3])
-    elif len(sys.argv) == 2:
+    elif len(sys.argv) == 3:
         matrix_algorithm(sys.argv[1], sys.argv[2])
     else:
         print('Incorrect amount of arguments, run script like this: '
