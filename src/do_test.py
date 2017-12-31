@@ -40,7 +40,7 @@ custom_test_res = [
 
 
 def test_matrix_method(test_data, grammar_name):
-    print('Matrix analysis...')
+    print('\nMatrix analysis...')
     graphs_path = 'data/test_graphs/'
     grammars_path = 'data/test_grammars/'
     for name, res in test_data.items():
@@ -54,7 +54,7 @@ def test_matrix_method(test_data, grammar_name):
 
 
 def test_bottom_up_method(test_data, grammar_name):
-    print('Bottom-up analysis...')
+    print('\nBottom-up analysis...')
     graphs_path = 'data/test_graphs/'
     grammars_path = 'data/test_grammars/'
     for name, res in test_data.items():
@@ -68,7 +68,7 @@ def test_bottom_up_method(test_data, grammar_name):
 
 
 def test_top_down_method(test_data, grammar_name):
-    print('Top-down analysis...')
+    print('\nTop-down analysis...')
     graphs_path = 'data/test_graphs/'
     grammars_path = 'data/test_grammars/'
     for name, res in test_data.items():
