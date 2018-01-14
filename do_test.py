@@ -1,4 +1,3 @@
-import sys
 import matrix_algo
 import bottom_up
 import top_down
@@ -31,11 +30,25 @@ test_data_Q2 = {
     'pizza.dot' : 1262,
 }
 
-custom_test_res = [
-    (0, 'S', 0),
-    (0, 'S', 1),
-    (1, 'S', 1)
+test_data_custom = [
+    ('ab.dot', 20),
+    ('wwr.dot', 3),
+    ('expressions.dot', 9),
+    ('a-loop.dot', 16),
+    ('epsilon.dot', 9)
 ]
+
+
+def custom_tests():
+    print('Small tests...')
+
+    for name, res in test_data_custom:
+        if not test_matrix_method({name : res}, name[:-4] + '_chomsky') or \
+                not test_bottom_up_method({name : res}, name[:-4]) or \
+                not test_top_down_method({name : res}, name[:-4]):
+            return False
+
+    return True
 
 
 def test_matrix_method(test_data, grammar_name):
@@ -51,6 +64,8 @@ def test_matrix_method(test_data, grammar_name):
         else:
             print("Test for " + grammar_name + " and " + name + " completed successfully.")
 
+    return True
+
 
 def test_bottom_up_method(test_data, grammar_name):
     print('\nBottom-up analysis...')
@@ -64,6 +79,8 @@ def test_bottom_up_method(test_data, grammar_name):
             return False
         else:
             print("Test for " + grammar_name + " and " + name + " completed successfully.")
+
+    return True
 
 
 def test_top_down_method(test_data, grammar_name):
@@ -79,37 +96,13 @@ def test_top_down_method(test_data, grammar_name):
         else:
             print("Test for " + grammar_name + " and " + name + " completed successfully.")
 
+    return True
+
 
 if __name__ == '__main__':
 
-    print('Custom graph:\n0 -> 0[label="1"]\n0 -> 1[label="0"]\n'
-          '1 -> 1[label"1"]\n1 -> 1[label="0"]\n')
-
-    matrix_custom = matrix_algo.matrix_algorithm('data/test_graphs/my_graph',
-                                                 'data/test_grammars/my_grammar_chomsky',
-                                                 custom_test=True).sort() == custom_test_res.sort()
-    if matrix_custom:
-        print('Custom test WWr passed with matrix algorithm')
-    else:
-        print('Custom test WWr failed with matrix algorithm')
-
-
-    bottom_up_custom = bottom_up.bottom_up_algo('data/test_graphs/my_graph',
-                                                'data/test_grammars/my_grammar_automata',
-                                                custom_test=True).sort() == custom_test_res.sort()
-    if bottom_up_custom:
-        print('Custom test WWr passed with bottom-up algorithm')
-    else:
-        print('Custom test WWr failed with bottom-up algorithm')
-
-
-    top_down_custom = top_down.top_down('data/test_graphs/my_graph',
-                                        'data/test_grammars/my_grammar_automata',
-                                        custom_test=True).sort() == custom_test_res.sort()
-    if top_down_custom:
-        print('Custom test WWr passed with top-down algorithm')
-    else:
-        print('Custom test WWr failed with top-down algorithm')
+    if custom_tests():
+        print('\nAll small tests passed successfully')
 
     q1_test = test_matrix_method(test_data_Q1, 'q1_chomsky')
     q2_test = test_matrix_method(test_data_Q2, 'q2_chomsky')

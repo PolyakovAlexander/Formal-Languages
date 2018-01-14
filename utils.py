@@ -7,6 +7,7 @@ import re
 class GrammarChomsky:
     def __init__(self):
         self.rules = defaultdict(list)
+        self.eps_nonterms = set()
 
 
 # graph-like grammar
@@ -18,6 +19,7 @@ class Grammar:
         self.terminals = set()
         self.non_terminals = set()
         self.length = 0
+
 
 def parse_chomsky_grammar(file):
 
@@ -31,7 +33,10 @@ def parse_chomsky_grammar(file):
 
     for line in f:
         splitted = line.strip().split(' -> ')
-        grammar.rules[splitted[0]] += [splitted[1]]
+        if splitted[1] == 'eps':
+            grammar.eps_nonterms.add(splitted[0])
+        else:
+            grammar.rules[splitted[0]] += [splitted[1]]
 
     f.close()
 

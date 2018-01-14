@@ -18,10 +18,11 @@ def matrix_closure(matrix, grammar, n):
     return matrix
 
 
-def matrix_algorithm(graph_path, gram_path, out=None, test=False, custom_test=False):
-    grammar = utils.parse_chomsky_grammar(gram_path).rules
-    graph, N, _ = utils.parse_graph(graph_path)
-    matrix = [[[] for i in range(N)] for j in range(N)]
+def matrix_algorithm(graph_path, gram_path, out=None, test=False):
+    G = utils.parse_chomsky_grammar(gram_path)
+    grammar = G.rules
+    graph, n, _ = utils.parse_graph(graph_path)
+    matrix = [[[] for i in range(n)] for j in range(n)]
 
     for (i, j, label) in graph:
         for left, right in grammar.items():
@@ -29,31 +30,33 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False, custom_test=Fa
                 if value == label:
                     matrix[int(i)][int(j)].append(left)
 
+    # Add loops if there is rules like A -> eps in grammar
+    for i in range(n):
+        matrix[i][i] += G.eps_nonterms
+
     old_matrix = ['!@#$%']
 
     while old_matrix != matrix:
         old_matrix = copy.deepcopy(matrix)
-        updated = matrix_closure(copy.deepcopy(matrix), grammar, N)
-        for i in range(N):
-            for j in range(N):
+        updated = matrix_closure(copy.deepcopy(matrix), grammar, n)
+        for i in range(n):
+            for j in range(n):
                 matrix[i][j] += updated[i][j]
                 matrix[i][j] = list(set(matrix[i][j]))
 
-    res = []
+    res = set()
     res_count = 0
 
-    for i in range(N):
-        for j in range(N):
+    for i in range(n):
+        for j in range(n):
             for non_term in matrix[i][j]:
                 if test and non_term == 'S':
                     res_count += 1
                 else:
-                    res.append((i, non_term, j))
+                    res.add((i, non_term, j))
 
     if test:
         return res_count
-    elif custom_test:
-        return list(filter(lambda x: x[1] == 'S', res))
     else:
         if out is None:
             for (i, non_term, j) in res:

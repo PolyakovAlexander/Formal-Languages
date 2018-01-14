@@ -65,7 +65,7 @@ def intersection(indices, automaton,
     return matrix, automaton, active_edges , changes
 
 
-def bottom_up_algo(automaton_path, grammar_path, out=None, test=False, custom_test=False):
+def bottom_up_algo(automaton_path, grammar_path, out=None, test=False):
 
     # grammar parameters
     g, grammar_vertex = utils.parse_grammar(grammar_path)
@@ -109,8 +109,7 @@ def bottom_up_algo(automaton_path, grammar_path, out=None, test=False, custom_te
         if inters_change or closure_change:
             smth_changes = True
 
-    res = []
-    res_count = 0
+    res = set()
 
     for i in range(n * k):
         for j in range(n * k):
@@ -118,27 +117,19 @@ def bottom_up_algo(automaton_path, grammar_path, out=None, test=False, custom_te
                 a, b = map_indices_to_states[i]
                 c, d = map_indices_to_states[j]
                 if b in start_states.keys() and d in final_states.keys():
-                    if test and start_states[b] == 'S':
-                        res_count += 1
-                    elif out is None and not test:
-                        if custom_test:
-                            res.append((a, start_states[b], c))
-                        else:
-                            print(a, start_states[b], c)
-                    else:
-                        res.append(str(a) + ',' + start_states[b] + ',' + str(c) + '\n')
+                    res.add(str(a) + ',' + start_states[b] + ',' + str(c) + '\n')
 
-    if custom_test:
-        return list(filter(lambda x: x[1] == 'S', res))
+    test_res = [x for x in res if 'S' in x]
 
     if test:
-        return res_count
-    elif out is not None:
+        return len(test_res)
+    elif out is None:
+        for item in res:
+            print(item.strip())
+    else:
         with open(out, 'w') as f:
             for item in res:
                 f.write(item)
-
-    return res_count
 
 if __name__ == '__main__':
 
