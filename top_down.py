@@ -5,9 +5,9 @@ import gll_classes
 
 def top_down(graph_path, gram_path, out=None, test=False):
 
-    automaton = utils.parse_graph(graph_path, gll=True)
+    automaton, size = utils.parse_graph(graph_path, gll=True)
     grammar, _ = utils.parse_grammar(gram_path)
-    gll = gll_classes.GLL(grammar, automaton)
+    gll = gll_classes.GLL(grammar, automaton, size)
 
     res = gll.main()
     res_count = 0

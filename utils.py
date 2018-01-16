@@ -115,6 +115,6 @@ def parse_graph(file, gll=False):
         for src, dst, label in matrix:
             graph[int(src)].add((int(dst), label))
 
-        return graph
+        return graph, size
 
     return matrix, size, vertex

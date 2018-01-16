@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import chain
 
 
 class GSS:
@@ -20,10 +19,11 @@ class GSS:
 class GLL:
 
     # rfa - grammar, fsm - automaton
-    def __init__(self, rfa, fsm):
+    def __init__(self, rfa, fsm, automaton_size):
 
         self.rfa = rfa
         self.fsm = fsm
+        self.automaton_size = automaton_size
         self.gss = None
 
         # popped gss nodes' set
@@ -42,9 +42,7 @@ class GLL:
         self.result = set()
 
     def add_new_conf(self, conf):
-
-        if conf not in self.history:
-            self.working_list.add(conf)
+        self.working_list.add(conf)
 
     def pop_node(self, gss_node, input_pos):
 
@@ -137,7 +135,7 @@ class GLL:
 
     def main(self):
 
-        n = len(self.fsm)
+        n = self.automaton_size
         start_states = self.rfa.starts.items()
 
         for automaton_pos in range(n):
@@ -145,7 +143,7 @@ class GLL:
                 self.gss = GSS((automaton_pos, label))
                 self.working_list = {(automaton_pos, start_state, (automaton_pos, label))}
                 self.history = set()
-                self.popped =set()
+                self.popped = set()
                 self.popped_info = defaultdict(set)
 
                 while self.working_list:
