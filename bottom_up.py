@@ -125,7 +125,7 @@ def bottom_up_algo(automaton_path, grammar_path, out=None, test=False):
                 if b in start_states.keys() and d in final_states.keys():
                     res.add(str(a) + ',' + start_states[b] + ',' + str(c) + '\n')
 
-    test_res = [x for x in res if 'S' in x]
+    test_res = [x for x in res if ',S,' in x]
 
     if test:
         return len(test_res)
