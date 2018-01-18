@@ -64,13 +64,13 @@ def parse_grammar(file):
         line = line.replace(" = ", '=')
 
         # fill start states
-        line_ = re.findall('(\d+)\[label="(\w+)", \w*color="green"\]', line)
+        line_ = re.findall('(\d+)\[label="(\w+)",[\w|=, "]*color="green"\]*', line)
         if line_:
             state, nonterminal = line_[0]
             grammar.starts[int(state)] = nonterminal
 
         # fill final states
-        line_ = re.findall('(\d+)\[label="(\w+)", shape="doublecircle"*', line)
+        line_ = re.findall('(\d+)\[label="(\w+)",[\w|=, "]*shape="doublecircle"*', line)
         if line_:
             state, nonterminal = line_[0]
             grammar.finals[int(state)] = nonterminal
