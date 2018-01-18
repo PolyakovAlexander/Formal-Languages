@@ -7,7 +7,7 @@
 ## Requirements:
 python3
 
-### How to run every algorithm:
+### How to run each algorithm:
 ```
 python3 matrix_algo.py data/test_graphs/[graph].dot data/test_grammars/q1_chomsky
 ```
