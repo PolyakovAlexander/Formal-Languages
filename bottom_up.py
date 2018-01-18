@@ -93,6 +93,14 @@ def bottom_up_algo(automaton_path, grammar_path, out=None, test=False):
 
     indices = {v: k for k, v in map_indices_to_states.items()}
 
+    res = set()
+
+    for st_state, st_nterm in start_states.items():
+        for fin_state, fin_nterm in final_states.items():
+            if st_nterm == fin_nterm and fin_state == st_state:
+                for i in automaton_vertex:
+                    res.add((str(i) + ',' + fin_nterm + ',' + str(i) + '\n').replace(' ', ''))
+
     smth_changes = True
     while smth_changes:
 
@@ -108,8 +116,6 @@ def bottom_up_algo(automaton_path, grammar_path, out=None, test=False):
                                                     automaton, active_edges)
         if inters_change or closure_change:
             smth_changes = True
-
-    res = set()
 
     for i in range(n * k):
         for j in range(n * k):
