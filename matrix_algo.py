@@ -5,6 +5,7 @@ import sys
 
 def matrix_closure(matrix, grammar, n):
 
+    changes = False
     for i in range(n):
         for j in range(n):
             for k in range(n):
@@ -14,8 +15,9 @@ def matrix_closure(matrix, grammar, n):
                             for value in right:
                                 if T1 + ' ' + T2 == value and left not in matrix[i][k]:
                                     matrix[i][k].append(left)
+                                    changes = True
 
-    return matrix
+    return changes, matrix
 
 
 def matrix_algorithm(graph_path, gram_path, out=None, test=False):
@@ -36,24 +38,20 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False):
 
     old_matrix = ['!@#$%']
 
-    while old_matrix != matrix:
-        old_matrix = copy.deepcopy(matrix)
-        updated = matrix_closure(copy.deepcopy(matrix), grammar, n)
-        for i in range(n):
-            for j in range(n):
-                matrix[i][j] += updated[i][j]
-                matrix[i][j] = list(set(matrix[i][j]))
+    is_changing = True
+    while is_changing:
+        is_changing, matrix = matrix_closure(matrix, grammar, n)
 
     res = set()
     res_count = 0
 
     for i in range(n):
         for j in range(n):
-            for non_term in matrix[i][j]:
-                if test and non_term == 'S':
+                if test and 'S' in matrix[i][j]:
                     res_count += 1
                 else:
-                    res.add((i, non_term, j))
+                    for non_term in matrix[i][j]:
+                        res.add((i, non_term, j))
 
     if test:
         return res_count
