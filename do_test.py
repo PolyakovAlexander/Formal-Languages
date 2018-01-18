@@ -35,6 +35,7 @@ test_data_custom = [
     ('wwr.dot', 3),
     ('expressions.dot', 9),
     ('a-loop.dot', 16),
+    ('anb.dot', 2),
     ('epsilon.dot', 6)
 ]
 

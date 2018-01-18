@@ -19,7 +19,7 @@ def top_down(graph_path, gram_path, out=None, test=False):
         return res_count
     elif out is None:
         for i, nonterm, j in res:
-            print(i, nonterm, j)
+            print(str(i) + ',' + nonterm + ',' + str(j))
     else:
         with open(out, 'w') as f:
             for i, nonterm, j in res:

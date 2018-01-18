@@ -36,8 +36,6 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False):
     for i in range(n):
         matrix[i][i] += G.eps_nonterms
 
-    old_matrix = ['!@#$%']
-
     is_changing = True
     while is_changing:
         is_changing, matrix = matrix_closure(matrix, grammar, n)
@@ -47,11 +45,11 @@ def matrix_algorithm(graph_path, gram_path, out=None, test=False):
 
     for i in range(n):
         for j in range(n):
-                if test and 'S' in matrix[i][j]:
-                    res_count += 1
-                else:
-                    for non_term in matrix[i][j]:
-                        res.add((i, non_term, j))
+            if test and 'S' in matrix[i][j]:
+                res_count += 1
+            else:
+                for non_term in matrix[i][j]:
+                    res.add((i, non_term, j))
 
     if test:
         return res_count
