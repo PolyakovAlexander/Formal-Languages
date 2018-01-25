@@ -4,7 +4,7 @@ from collections import defaultdict
 class GSS:
 
     def __init__(self, node):
-        # every node is a dict: node -> set((node, label))
+        # dict: node -> set((node, label))
         self.nodes = defaultdict(set)
         self.nodes[node] = set()
 
